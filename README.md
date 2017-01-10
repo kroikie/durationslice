@@ -14,16 +14,16 @@ what units you want the duration divided into and it will return a slice
 with the corresponding unit values.
 
 ## Example
-If you had a duration that was 48 hours and 10 seconds long and you wanted
-to represent that as days, minutes and seconds. You could use the following:
+If you had a duration that was 75 minutes and 65 seconds long and you wanted
+to represent that as hours, minutes and seconds. You could use the following:
 
-    ds, err := durationslice.Process(time.Duration((48*time.Hour)+(10*time.Second)), "d min s")
+    ds, err := durationslice.Process(time.Duration((75*time.Minute)+(65*time.Second)), "h m s")
 	if err != nil {
 	    print(err.Error())
 		return
 	}
 	fmt.Printf("%@", ds)
-`output: [2 0 10]`
+`output: [1 16 5]`
 
 The resulting slice would give the values corresponding to the units
 specified in the unit string.

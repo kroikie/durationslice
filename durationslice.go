@@ -7,13 +7,14 @@ import (
 )
 
 var (
-	UNITS = []string{"y", "m", "w", "d", "h", "min", "s", "milli"}
+	UNITS = []string{"y", "mon", "w", "d", "h", "m", "s", "milli"}
 )
 
 const (
-	YEAR_IN_NANO  = time.Duration(31556952000011380)
-	MONTH_IN_NANO = time.Duration(2629745999998182)
-	DAY_IN_NANO   = time.Duration(86399999999806)
+	YEAR_IN_NANO  = time.Duration(time.Hour * 8760)
+	MONTH_IN_NANO = time.Duration(time.Hour * 730) // used 730 instead of 730.001
+	WEEK_IN_NANO  = time.Duration(time.Hour * 168)
+	DAY_IN_NANO   = time.Duration(time.Hour * 24)
 )
 
 func Process(d time.Duration, s string) ([]int64, error) {
@@ -39,10 +40,14 @@ func extractUnit(d time.Duration, u string) (int64, int64) {
 		y := d.Nanoseconds() / YEAR_IN_NANO.Nanoseconds()
 		b := d.Nanoseconds() - (y * YEAR_IN_NANO.Nanoseconds())
 		return y, b
-	case "m":
+	case "mon":
 		m := d.Nanoseconds() / MONTH_IN_NANO.Nanoseconds()
 		b := d.Nanoseconds() - (m * MONTH_IN_NANO.Nanoseconds())
 		return m, b
+	case "w":
+		w := d.Nanoseconds() / WEEK_IN_NANO.Nanoseconds()
+		b := d.Nanoseconds() - (w * WEEK_IN_NANO.Nanoseconds())
+		return w, b
 	case "d":
 		day := d.Nanoseconds() / DAY_IN_NANO.Nanoseconds()
 		b := d.Nanoseconds() - (day * DAY_IN_NANO.Nanoseconds())
@@ -51,7 +56,7 @@ func extractUnit(d time.Duration, u string) (int64, int64) {
 		h := d.Nanoseconds() / time.Hour.Nanoseconds()
 		b := d.Nanoseconds() - (h * time.Hour.Nanoseconds())
 		return h, b
-	case "min":
+	case "m":
 		min := d.Nanoseconds() / time.Minute.Nanoseconds()
 		b := d.Nanoseconds() - (min * time.Minute.Nanoseconds())
 		return min, b
