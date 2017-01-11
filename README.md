@@ -1,4 +1,4 @@
-# Duration Slice
+# Duration Slice ![Build Status](https://travis-ci.org/kroikie/durationslice.svg?branch=master)
 Duration Slice is a Go library that generates a slice representation
 of a duration in units specified.
 
