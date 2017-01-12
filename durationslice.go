@@ -17,6 +17,8 @@ const (
 	DAY_IN_NANO   = time.Duration(time.Hour * 24)
 )
 
+// Process takes a duration and a string defining time units.
+// It returns a slice with values corresponding to the units defined in the string.
 func Process(d time.Duration, s string) ([]int64, error) {
 	u := strings.Fields(s)
 	_, err := checkUnits(u)
